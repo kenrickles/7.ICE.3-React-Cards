@@ -78,20 +78,30 @@ export default function App() {
   const [computerHand, setComputerHand] = useState([]);
   // create the deal button click handler
   const dealCards = () => {
-    hand.push(cards.pop())
-    setPlayerHand(hand);
-    setCards([...cards]);
+    if(cards.length > playerHand.length ) {
+      hand.push(cards.pop())
+      setPlayerHand(hand);
+      setCards([...cards]);
+    }
+    else {
+      resetGame()
+    }
     
   };
 
   const playHand = () => {
     const computerHand = [];
-    for(let i = 0; i < playerHand.length; i += 1){
-      computerHand.push(cards.pop())
+    if(cards.length > playerHand.length){
+      for(let i = 0; i < playerHand.length; i += 1){
+        computerHand.push(cards.pop())
+      }
+      setComputerHand(computerHand);
+      setCards([...cards]);
+    } else{
+      resetGame()
     }
-    setComputerHand(computerHand);
-    setCards([...cards]);
-  }
+    }
+    
 
   console.log(playerHand, 'playerHand')
   console.log(computerHand, 'ComputerHand')
@@ -145,6 +155,7 @@ export default function App() {
   const resetGame  = () => {
     setPlayerHand([]);
     setComputerHand([]);
+    setCards([...deck]);
   }
   // render the cards in the hand
   // note that when this renders the first time and the hand is
